@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "projects": {
+    "hoidays": {
+      "projectType": "application",
+      "root": "apps/hoidays",
+      "sourceRoot": "apps/hoidays/src",
+      "prefix": "holidays-nx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/hoidays",
+            "index": "apps/hoidays/src/index.html",
+            "main": "apps/hoidays/src/main.ts",
+            "polyfills": "apps/hoidays/src/polyfills.ts",
+            "tsConfig": "apps/hoidays/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/hoidays/src/favicon.ico",
+              "apps/hoidays/src/assets"
+            ],
+            "styles": ["apps/hoidays/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/hoidays/src/environments/environment.ts",
+                  "with": "apps/hoidays/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "hoidays:build:production"
+            },
+            "development": {
+              "browserTarget": "hoidays:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "hoidays:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/hoidays/src/**/*.ts",
+              "apps/hoidays/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/hoidays"],
+          "options": {
+            "jestConfig": "apps/hoidays/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "hoidays-e2e": {
+      "root": "apps/hoidays-e2e",
+      "sourceRoot": "apps/hoidays-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/hoidays-e2e/cypress.json",
+            "devServerTarget": "hoidays:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "hoidays:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/hoidays-e2e/**/*.{js,ts}"]
+          }
+        }
+      },
+      "tags": [],
+      "implicitDependencies": ["hoidays"]
+    }
+  }
+}
